@@ -1,3 +1,5 @@
+# Redefining the YAML content and saving it again
+yaml_content = """
 swagger: '2.0'
 info:
   title: Bank Argent API documentation
@@ -74,7 +76,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -103,11 +105,121 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile updated successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  #------ Partie 2 du projet -------#
+  /transactions:
+    get:
+      tags:
+        - Transactions Module
+      summary: Retrieve all transactions for the current month
+      description: Fetches all user transactions for the current month, grouped by account.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '400':
+          description: Invalid request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - Transactions Module
+      summary: Create a new transaction
+      description: Adds a new transaction associated with a user account.
+      parameters:
+        - in: body
+          name: body
+          description: Transaction details
+          required: true
+          schema:
+            $ref: '#/definitions/NewTransaction'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Transaction created successfully
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid fields
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - Transactions Module
+      summary: Retrieve transaction details
+      description: Fetches details of a specific transaction.
+      parameters:
+        - in: path
+          name: transactionId
+          description: The ID of the transaction to fetch
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - Transactions Module
+      summary: Update a transaction
+      description: Updates information of a specific transaction.
+      parameters:
+        - in: path
+          name: transactionId
+          description: The ID of the transaction to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction attributes to update
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateTransaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Transactions Module
+      summary: Delete a transaction
+      description: Removes a transaction from the system.
+      parameters:
+        - in: path
+          name: transactionId
+          description: The ID of the transaction to delete
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: Transaction deleted successfully
+        '404':
+          description: Transaction not found
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -164,3 +276,63 @@ definitions:
         type: string
       lastName:
         type: string
+  TransactionsResponse:
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+          $ref: '#/definitions/TransactionGroup'
+  TransactionGroup:
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: ID of the account
+      transactions:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      description:
+        type: string
+        description: Description of the transaction
+      date:
+        type: string
+        format: date-time
+        description: Date and time of the transaction
+  NewTransaction:
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: ID of the account associated with the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      description:
+        type: string
+        description: Description of the transaction
+  UpdateTransaction:
+    type: object
+    properties:
+      amount:
+        type: number
+        description: Updated amount of the transaction
+      description:
+        type: string
+        description: Updated description of the transaction
+  TransactionDetails:
+    type: object
+    properties:
+      id:
+        type: string
+        description

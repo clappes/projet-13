@@ -1,0 +1,39 @@
+{
+    "card": [
+      {
+        "id": "1",
+        "icon": "/assets/font/icon-chat.png",
+        "title": "You are our #1 priority",
+        "paragraph": "Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."
+      },
+      {
+        "id": "2",
+        "icon": "/assets/font/icon-money.png",
+        "title": "More savings means higher rates",
+        "paragraph": "The more you save with us, the higher your interest rate will be!"
+      },
+      {
+        "id": "3",
+        "icon": "/assets/font/icon-security.png",
+        "title": "Security you can trust",
+        "paragraph": "We use top of the line encryption to make sure your data and money is always safe."
+      }
+    ],
+    "transactions": [
+      {
+          "title": "Argent Bank Checking (x8349)",
+          "montant": "2,082.79",
+          "available":"Available Balance"
+      },
+      {
+          "title": "Argent Bank Savings (x6712)",
+          "montant": "10,928.42",
+          "available":"Available Balance"
+      },
+      {
+          "title": "Argent Bank Credit Card (x8349)",
+          "montant": "184.30",
+          "available":"Current Balance"
+      }
+    ]
+  }
